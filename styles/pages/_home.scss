@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    background: url(../images/galaxy-background-with-sparkling-clouds_53876-104863.avif) center/cover;
+    height: 100vh;
+    &::before{
+        @include whitefilter_before (0.2)
+    }
+}
+h1{
+    color: #fff;
+    text-transform: uppercase;
+    text-align: right;
+    margin-right: 50px;
+    font-size: 45px;
+    span{
+        color: $pinky;
+    }
+}
+.wrapper{
+    width: 1000px;
+    @include absmiddle;
+    font-family: "Kanit", sans-serif;
+    display: flex;
+    gap: 25px;
+    h3{
+        text-transform: uppercase;
+        color: #fff;
+        text-align: right;
+        margin: 10px;
+        font-size: 26px;
+        letter-spacing: 1px;
+        span{
+            color: $pinky;
+        }
+    }
+}
+.leftpart{
+    width: 50%;
+    color: #fff;
+    .leftpart_backgrd{
+        background-color: rgba(255, 192, 203, 0.8);
+        padding: 50px;
+        border-radius: 5px; 
+
+    }
+    .inputBox{
+        input, textarea{
+            width: 100%;
+            margin: 5px 0 15px 0;
+            background-color: transparent;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        #taskdate{
+            color: inherit;
+        }
+    }
+    button{
+        width: 100%;
+        text-transform: uppercase;
+        background-color: #fff;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        padding: 10px;
+        font-weight: bold;
+        color: pink;
+        &:hover{
+            background-color: pink;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+}
+.rightpart{
+    width: 50%;
+    color: #fff;
+    .done{
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        color: rgb(250, 192, 202)
+    }
+    .trierBox{
+        margin-top: 20px;
+    }
+    button{
+        margin-bottom: 10px;
+    }
+}
+button{
+    width: 100%;
+    text-transform: uppercase;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    color: pink;
+    &:hover{
+        background-color: pink;
+        color: #fff;
+        cursor: pointer;
+    }
+}
+summary{
+    display: flex;
+    
+    #checkbox{
+        margin-right: 5px;
+    }
+    .right{
+        display: flex;
+        margin-left: auto;
+    }
+    button{
+        background-color: transparent;
+        padding: 0;
+    }
+}
+
+
+/* Cibler l'icône du calendrier dans Chrome et Edge */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Inverser les couleurs pour changer la couleur de l'icône */
+}
+
+/* Cibler l'icône du calendrier dans Firefox */
+input[type="date"]::-moz-calendar-picker-indicator {
+    filter: invert(1); /* Inverser les couleurs pour changer la couleur de l'icône */
+}
+
+/* Cibler l'icône du calendrier dans Safari */
+input[type="date"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Masquer le bouton de rotation */
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.min.css">
+    <title>Exercice n° </title>
+     
+</head>
+<body>
+    <h1>My<span>tasks</span>list</h1>
+    <div class="wrapper">
+        <div class="leftpart">
+            <h3>Task<span>creator</span></h3>
+            <div class="leftpart_backgrd">
+                <div class="inputBox">
+                    <label for="taskname">Nom de la tâche</label>
+                    <input type="text" id="taskname">
+                </div>
+                <div class="inputBox">
+                    <label for="taskdate">Date à laquelle la tâche doit être exécutée</label>
+                    <input type="date" id="taskdate">
+                </div>
+                <div class="inputBox">
+                    <label for="task_textarea">Description de la tâche</label>
+                    <textarea  id="task_textarea" cols="30" rows="10"></textarea>
+                </div>
+                <button class="add">Ajouter</button>
+            </div>
+        </div>
+        <div class="rightpart">
+            <h3>Task<span>list</span></h3>
+            <div class="rightpart_backgrd">
+                <div>
+                    <div class="done">Done ✔</div>
+                    <div class="notaskdone">No task done</div>
+                </div>
+                <div class="trierBox">
+                    <div class="done">In the Tube</div>
+                    <button>Trier</button>
+                    <div class="notasktube">No task in the tube</div>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+  
+    <script src="scripts/main.js"></script> 
+</body>
+</html>
