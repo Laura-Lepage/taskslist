@@ -103,21 +103,39 @@ button{
         cursor: pointer;
     }
 }
+details{
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 7px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    
+}
 summary{
     display: flex;
-    
-    #checkbox{
-        margin-right: 5px;
+    align-items: center;
+    .checkbox{
+        margin-right: 10px;
+    }
+    .left{
+        width: 50%;
     }
     .right{
-        display: flex;
-        margin-left: auto;
+        width: 50%;
+        text-align: right;
     }
     button{
         background-color: transparent;
         padding: 0;
+        width: 15%;
+        margin-left: 15px;
+        border: none;
     }
 }
+details summary::-webkit-details-marker {
+    display:none;
+  }
 
 
 /* Cibler l'icône du calendrier dans Chrome et Edge */
