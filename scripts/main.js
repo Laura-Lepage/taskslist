@@ -38,12 +38,12 @@ function updateTaskList(){
 // Fonction pour mettre à jour la liste des tâches terminées
 function updateDoneTaskList(){
     // Vider divNoTaskDone avant d'ajouter les tâches terminées
-    divNoTaskDone.innerHTML = '';
+    divNoTaskDone.innerHTML = ''
 
     // Ajouter les tâches terminées à divNoTaskDone
     taskDoneTable.forEach((task, index) => {
         divNoTaskDone.innerHTML += `<details><summary>${task.task}</summary></details>`;
-    });
+    })
 }
 
 addButton.addEventListener('click', function(){
@@ -56,9 +56,6 @@ addButton.addEventListener('click', function(){
         console.log(taskTubeTable)
 
         updateTaskList()
-
-        // Sauvegarder taskTubeTable et taskDoneTable dans le localStorage
-        localStorage.setItem('taskTubeTable', JSON.stringify(taskTubeTable))
 
         // Réinitialiser les champs de saisie
         taskName.value = ""
@@ -100,18 +97,26 @@ divNoTaskTube.addEventListener('click', function(e){
         console.log(taskDoneTable)
 
         checkElement(taskTubeTable, pNoTaskTube)
-        
-        divNoTaskDone.innerHTML += `<details><summary>${taskDoneTable[taskDoneTable.length-1].task}</summary></details>`
+
+        //ajouter les tâches à la liste en HTML
+        updateDoneTaskList()
 
         checkElement(taskDoneTable, pNoTaskDone)
 
-        updateTaskList()
-        updateDoneTaskList()
+        // Vérifier si le nombre de tâches terminées dépasse 5
+        if (taskDoneTable.length > 5){
+            // Supprimer la tâche la plus ancienne (la première dans le tableau taskDoneTable)
+            taskDoneTable.shift()
+            // Mettre à jour l'affichage des tâches terminées
+            updateDoneTaskList()
+            localStorage.setItem('taskDoneTable', JSON.stringify(taskDoneTable))
+        }
 
+        updateTaskList()
+        
         // Mettre à jour le localStorage avec les tâches terminées
         localStorage.setItem('taskDoneTable', JSON.stringify(taskDoneTable))
         localStorage.setItem('taskTubeTable', JSON.stringify(taskTubeTable))
-        
     }
     if(e.target.classList.contains("cross")){
         // Récupérer l'index de la tâche dans le tableau taskTubeTable
@@ -126,7 +131,6 @@ divNoTaskTube.addEventListener('click', function(e){
 
 //Charger les tâches à partir du localStorage au chargement de la page
 window.addEventListener('load', function(){
-
     // Vérifier si des tâches sont déjà stockées dans le localStorage
     if (localStorage.getItem('taskTubeTable')) {
         // Si des tâches sont trouvées, les charger dans le tableau taskTubeTable
@@ -139,7 +143,14 @@ window.addEventListener('load', function(){
     // Vérifier si des tâches terminées sont déjà stockées dans le localStorage
     if (localStorage.getItem('taskDoneTable')) {
         // Si des tâches terminées sont trouvées, les charger dans le tableau taskDoneTable
-        taskDoneTable = JSON.parse(localStorage.getItem('taskDoneTable'));
+        taskDoneTable = JSON.parse(localStorage.getItem('taskDoneTable'))
+        // Vérifier si le nombre de tâches terminées dépasse 5
+        if (taskDoneTable.length > 5) {
+            // Si oui, supprimer les tâches excédentaires
+            taskDoneTable = taskDoneTable.slice(taskDoneTable.length - 5);
+            // Mettre à jour le localStorage avec les tâches terminées limitées à 5
+            localStorage.setItem('taskDoneTable', JSON.stringify(taskDoneTable));
+        }
         // Mettre à jour la liste des tâches terminées
         updateDoneTaskList()
         checkElement(taskDoneTable, pNoTaskDone)
