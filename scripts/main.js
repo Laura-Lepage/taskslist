@@ -10,33 +10,33 @@ let sortButton = document.querySelector(".sort")
 let taskTubeTable = []
 let taskDoneTable = []
 
-function checkElement(whichp) {
-    if (taskTubeTable.length === 0) {
+function checkElement(table, whichp){
+    if (table.length === 0) {
         whichp.innerHTML = `No task in the tube`;
     } else {
         whichp.innerHTML = ``;
     }
 }
 
-function updateTaskList() {
+function updateTaskList(){
     // Vider divNoTaskTube avant d'ajouter les tâches triées
     divNoTaskTube.innerHTML = '';
 
     // Ajouter les tâches triées à divNoTaskTube
     taskTubeTable.forEach((task, index) => {
-        divNoTaskTube.innerHTML += `<details data-index="${index}" draggable="true">
+        divNoTaskTube.innerHTML += `<details data-index="${index}">
                                         <summary>
                                             <span class="left">
                                                 <input type="checkbox" class="checkbox">${task.task}
                                             </span>
-                                            <span class="right">${task.date}<button class="cross">❌</button></span>
+                                            <span class="right">${task.date}<button class="cross">🗑️</button></span>
                                         </summary>${task.description}
-                                    </details>`;
-    });
+                                    </details>`
+    })
 }
 
 // Fonction pour mettre à jour la liste des tâches terminées
-function updateDoneTaskList() {
+function updateDoneTaskList(){
     // Vider divNoTaskDone avant d'ajouter les tâches terminées
     divNoTaskDone.innerHTML = '';
 
@@ -49,14 +49,16 @@ function updateDoneTaskList() {
 addButton.addEventListener('click', function(){
     // Vérifier si les champs "nom de la tâche" et "date" sont remplis
     if(taskName.value.trim() !== '' && taskDate.value.trim() !== ''){
-        checkElement(pNoTaskTube)
+        checkElement(taskTubeTable, pNoTaskTube)
 
         // Ajouter la tâche au tableau taskTubeTable
         taskTubeTable.push({task: taskName.value, date: taskDate.value, description: taskArea.value})
+        console.log(taskTubeTable)
+
+        updateTaskList()
 
         // Sauvegarder taskTubeTable et taskDoneTable dans le localStorage
         localStorage.setItem('taskTubeTable', JSON.stringify(taskTubeTable))
-        localStorage.setItem('taskDoneTable', JSON.stringify(taskDoneTable))
 
         // Réinitialiser les champs de saisie
         taskName.value = ""
@@ -64,7 +66,7 @@ addButton.addEventListener('click', function(){
         taskArea.value = ""
 
         // Vérifier à nouveau s'il y a des éléments enfants dans divNoTaskTube
-        checkElement(pNoTaskTube)
+        checkElement(taskTubeTable, pNoTaskTube)
     } else {
         // Si les champs ne sont pas remplis, afficher un message d'erreur ou effectuer une autre action
         alert("Veuillez remplir les champs 'Nom de la tâche' et 'Date' avant d'ajouter une tâche.")
@@ -80,6 +82,8 @@ sortButton.addEventListener('click', function(){
 
     // Mettre à jour la liste des tâches terminées
     updateDoneTaskList()
+
+    localStorage.setItem('taskTubeTable', JSON.stringify(taskTubeTable))
 })
 
 divNoTaskTube.addEventListener('click', function(e){
@@ -95,10 +99,11 @@ divNoTaskTube.addEventListener('click', function(e){
 
         console.log(taskDoneTable)
 
-        checkElement(pNoTaskTube)
+        checkElement(taskTubeTable, pNoTaskTube)
         
         divNoTaskDone.innerHTML += `<details><summary>${taskDoneTable[taskDoneTable.length-1].task}</summary></details>`
-        checkElement(pNoTaskDone)
+
+        checkElement(taskDoneTable, pNoTaskDone)
 
         updateTaskList()
         updateDoneTaskList()
@@ -115,12 +120,12 @@ divNoTaskTube.addEventListener('click', function(e){
         e.target.parentElement.parentElement.parentElement.remove()
         // Supprimer la tâche de taskTubeTable
         taskTubeTable.splice(index, 1)
-        checkElement(pNoTaskTube)
+        checkElement(taskTubeTable, pNoTaskTube)
     }
 })
 
-// Charger les tâches à partir du localStorage au chargement de la page
-window.addEventListener('load', function() {
+//Charger les tâches à partir du localStorage au chargement de la page
+window.addEventListener('load', function(){
 
     // Vérifier si des tâches sont déjà stockées dans le localStorage
     if (localStorage.getItem('taskTubeTable')) {
@@ -128,7 +133,7 @@ window.addEventListener('load', function() {
         taskTubeTable = JSON.parse(localStorage.getItem('taskTubeTable'));
         // Mettre à jour la liste des tâches affichée
         updateTaskList()
-        checkElement(pNoTaskTube)
+        checkElement(taskTubeTable, pNoTaskTube)
     }
 
     // Vérifier si des tâches terminées sont déjà stockées dans le localStorage
@@ -137,27 +142,15 @@ window.addEventListener('load', function() {
         taskDoneTable = JSON.parse(localStorage.getItem('taskDoneTable'));
         // Mettre à jour la liste des tâches terminées
         updateDoneTaskList()
-        checkElement(pNoTaskDone)
+        checkElement(taskDoneTable, pNoTaskDone)
     }
     
-    checkElement(pNoTaskTube)
-    checkElement(pNoTaskDone)
+    checkElement(taskTubeTable, pNoTaskTube)
+    checkElement(taskDoneTable, pNoTaskDone)
 })
 
 
 
-
-
-// let clearButtons = document.querySelectorAll(".clear")
-
-// clearButtons.forEach(function(button) {
-//     button.addEventListener('click', function() {
-//         // Code à exécuter lorsque le bouton est cliqué
-//         taskDoneTable = []
-//         divNoTaskDone.innerHTML = 'No task done'
-//         localStorage.clear()
-//     });
-// })
 
 
 
